@@ -1,0 +1,50 @@
+<%- include('head') %>
+<%- include('header') %>
+
+<main class="container">
+  <div class="file-input">
+    <form class="file-input__form" action="/branch" method="post" enctype="application/x-www-form-urlencoded">
+      <input required placeholder="Filial" name="code_branch" type="number" />
+      <input required placeholder="Cidade" name="city" type="text" />
+      
+      <button title="Enviar" type="submit" class="btn">
+        ADICIONAR FILIAL
+      </button>
+    </form>
+    
+    <header class="header">
+      <small class="header__text">Todas as filiais.</small>
+    </header>
+    
+    <% if (data.length <= 0) { %>
+      <p>Nenhuma filial encontrada.</p>
+    <% } else { %>
+      <div class="todos">
+      <% data.map(item => { %>
+        <div class="todo">
+          <div>
+            <b>Código da filial: </b>
+            <input value="<%= item.code_branch %>" />
+          </div>
+          <div>
+            <b>Cidade: </b>
+            <input value="<%= item.city %>" />
+          </div>
+          
+          <div class="todo">
+            <form action="/branch/edit/<%= item.id %>" method="post" enctype="application/x-www-form-urlencoded">
+                <button class="btn_edit">ATUALIZAR</button>
+            </form>
+              
+            <form action="/branch/delete/<%= item.id %>" method="post" enctype="application/x-www-form-urlencoded">
+                <button class="btn_delete">DELETAR</button>
+            </form>
+          </div>
+        </div>
+      <%  }) %>
+      </div>
+    <% } %>
+  </div>
+</main>
+
+<%- include('footer') %>

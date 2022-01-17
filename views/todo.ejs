@@ -1,0 +1,107 @@
+<%- include('head') %>
+<%- include('header') %>
+
+<% if(error !=  '') { %>
+  <div id="toast">
+    <div class="toast__container-1">
+      <i class="fas fa-times-circle"></i>
+    </div>
+    <div class="toast__container-2">
+      <p>Error</p>
+      <p><%= error %></p>
+    </div>
+    <button class="toast__button--close">
+      &times;
+    </button>
+  </div>
+<% } %>
+
+<main class="container">
+  <div class="file-input">
+    <form class="file-input__form" action="/" method="post" enctype="application/x-www-form-urlencoded">
+      <input required placeholder="Código" name="code" type="text" />
+      <input required placeholder="Razão social" name="corporate_name" type="text" />
+      <input required placeholder="Nome" name="name" type="text" />
+      
+      <select name="branch">
+        <%- include('optionsBranch', { data, branchs }) %>
+      </select>
+      
+      <button title="Enviar" type="submit" class="btn">
+        ADICIONAR CLIENTE
+      </button>
+    </form>
+    
+    <header class="header">
+      <small class="header__text">Procure pelo cliente específico.</small>
+    </header>
+  
+    <form action="/search" method="post" enctype="application/x-www-form-urlencoded">
+      <div class="formSearch">
+        <input required placeholder="Pesquisar" name="q" type="text" />
+        
+        <select name="type">
+          <option value="code">Código</option>
+          <option value="name" selected>Nome</option>
+          <option value="corporate_name">Razão social</option>
+        </select>
+        
+        <select name="branch">
+          <option value="0">Todas</option>
+          <%- include('optionsBranch', { data }) %>
+        </select>
+      </div>
+      
+      <button class="btn">PROCURAR</button>
+    </form>
+    
+    <header class="header">
+      <small class="header__text">Todos os clientes de todas as filiais.</small>
+    </header>
+    
+    <% if (data.length <= 0) { %>
+      <p>Nenhum cliente encontrado.</p>
+    <% } else { %>
+      <div class="todos">
+      <% data.map(item => { %>
+        
+          <div class="todo">
+          <div>
+            <b>Código: </b>
+            <p><%= item.code %></p>
+          </div>
+          <div>
+            <b>Razão social: </b>
+            <p><%= item.corporate_name %></p>
+          </div>
+          <div>
+            <b>Nome: </b>
+            <p><%= item.name %></p>
+          </div>
+          <div>
+            <b>Filial: </b>
+            <p><%= item.city %></p>
+          </div>
+          
+          <div>
+            <a href="/edit/<%= item.id %>" class="btn_edit">EDITAR</a>
+              
+            <form action="/delete/<%= item.id %>" method="post" enctype="application/x-www-form-urlencoded">
+                <button class="btn_delete">DELETAR</button>
+            </form>
+          </div>
+        </div>
+      <%  }) %>
+      </div>
+      
+      <% if (data.length > 5) { %>
+        <div class="pagination">
+          <a title="voltar" href="?page=<%= (page - 1) %>" class="pagination__button">« Voltar</a>
+          <a title="próximo" href="?page=<%= (page + 1) %>" class="pagination__button">Próximo »</a>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+</main>
+
+<%- include('footer') %>

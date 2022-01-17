@@ -1,0 +1,9 @@
+<% if (data.branch) { %>
+  <% branchs.map(branch => { %>
+    <option value="<%= branch.id %>" <%= data.branch == branch.id ? "selected" : "" %>><%= branch.city %></option>
+  <% }) %>
+<% } else { %>
+  <% branchs.map(branch => { %>
+    <option value="<%= branch.id %>"><%= branch.city %></option>
+  <% }) %>
+<% } %>
