@@ -67,7 +67,7 @@ module.exports = {
     
     const todoExist = await connection("todo").where({ code }).first().returning('*');
     
-    if (!todoExist) {
+    if (todoExist) {
       throw new AppError('Código de cliente já cadastrado!');
     }
     
