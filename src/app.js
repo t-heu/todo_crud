@@ -16,11 +16,11 @@ app.set('view engine', 'ejs');
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(
   session({
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 60 * 60 * 24 * 1000 },
     name: 'sid',
     secret: 'woot',
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
   }),
 );
 app.use(passport.initialize());

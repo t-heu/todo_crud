@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 module.exports = function(passport) {
   passport.use(new localpass({usernameField: 'name', passwordField: 'password'}, (name, password, done) => {
     
-    connection("user").where({ name }).first().returning('*').then((data) => {
+    connection("user").where({ name }).first().returning('*').then(data => {
       
       if(!data) {
         return done(null, false, { message: 'nenhum usuário encontrado com esse login!' })
@@ -23,8 +23,8 @@ module.exports = function(passport) {
     done(null, data.id);
   });
   
-  passport.deserializeUser((id, done)  => {
-    connection("user").where({ id }).first().returning('*').then(data => {
+  passport.deserializeUser((data_id, done)  => {
+    connection("user").where({ id: data_id }).first().returning('*').then(data => {
       done(null, data);
     });
   });
