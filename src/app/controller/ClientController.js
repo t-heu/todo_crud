@@ -7,9 +7,9 @@ module.exports = {
     const { q, type, branch } = request.body;
     let data = [];
     
-    const [count] = await connection('todo').count().returning('*');
+    const [count] = await connection('client').count().returning('*');
     
-    const branchs = await connection('branchs')
+    const branchs = await connection('branch')
       .select('*');
     
     const calcPagesMax = Math.ceil(count.count / 5);
@@ -24,30 +24,32 @@ module.exports = {
     
     if (q) {
       if (branch === '0') {
-        data = await connection('todo')
-          .join('branchs', 'branchs.id', '=', 'todo.branch_id')
+        data = await connection('client')
+          .join('branch', 'branch.id', '=', 'client.branch_id')
           .limit(5)
           .offset((page - 1) * 5)
           .where(`${type}`, 'ILIKE', `%${q}%`)
-          .select(['todo.*', 'branchs.city']);
-      } else {
-        data = await connection('todo')
-          .join('branchs', 'branchs.id', '=', 'todo.branch_id')
+          //.collate('utf8_general_ci')
+          .select(['client.*', 'branch.city']);
+       } else {
+        data = await connection('client')
+          .join('branch', 'branch.id', '=', 'client.branch_id')
           .limit(5)
           .offset((page - 1) * 5)
+          //.collate('utf8_general_ci')
           .where(`${type}`, 'ILIKE', `%${q}%`)
           .where('branch_id', `${branch}`)
-          .select(['todo.*', 'branchs.city']);
+          .select(['client.*', 'branch.city']);
       }
     } else {
-      data = await connection('todo')
-        .join('branchs', 'branchs.id', '=', 'todo.branch_id')
+      data = await connection('client')
+        .join('branch', 'branch.id', '=', 'client.branch_id')
         .limit(5)
         .offset((page - 1) * 5)
-        .select(['todo.*', 'branchs.city']);
+        .select(['client.*', 'branch.city']);
     }
     
-    return response.render('todo', { data, branchs, page });
+    return response.render('client', { data, branchs, page });
   },
 
   async store(request, response) {
@@ -65,13 +67,13 @@ module.exports = {
       throw new AppError('Informe Nome do cliente!');
     }
     
-    const todoExist = await connection("todo").where({ code }).first().returning('*');
+    const todoExist = await connection("client").where({ code }).first().returning('*');
     
     if (todoExist) {
       throw new AppError('Código de cliente já cadastrado!');
     }
     
-    await connection('todo').insert({
+    await connection('client').insert({
       code,
       corporate_name,
       name,
@@ -93,7 +95,7 @@ module.exports = {
       throw new AppError('Informe conteúdo para atualizar!');
     }
     
-    await connection("todo").update(data).where({ id });
+    await connection("client").update(data).where({ id });
     
     return response.redirect('/');
   },
@@ -105,7 +107,7 @@ module.exports = {
       throw new AppError('id not found!');
     }
 
-    await connection('todo').where('id', id).delete();
+    await connection('client').where('id', id).delete();
     
     return response.redirect('/');
   }

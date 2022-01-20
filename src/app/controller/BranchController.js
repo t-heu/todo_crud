@@ -4,7 +4,7 @@ const AppError = require('../../utils/appError');
 
 module.exports = {
   async index(request, response) {
-    const data = await connection('branchs')
+    const data = await connection('branch')
       .select('*');
     
     return response.render('branch', { data });
@@ -21,7 +21,7 @@ module.exports = {
       throw new AppError('Informe a cidade!');
     }
     
-    const branchExist = await connection("branchs").where({ code_branch }).first().returning('*');
+    const branchExist = await connection("branch").where({ code_branch }).first().returning('*');
     
     if (branchExist) {
       throw new AppError('Filial já existente');
@@ -29,7 +29,7 @@ module.exports = {
     
     const id = generateUniqueId();
     
-    await connection('branchs').insert({
+    await connection('branch').insert({
       id,
       code_branch: Number(code_branch),
       city,
@@ -50,7 +50,7 @@ module.exports = {
       throw new AppError('Informe conteúdo para atualizar!');
     }
     
-    await connection("branchs").update(data).where({ id });
+    await connection("branch").update(data).where({ id });
     
     return response.redirect('/branch');
   },

@@ -9,13 +9,13 @@ module.exports = {
       throw new AppError('id not found!');
     }
     
-    const branchs = await connection('branchs')
+    const branchs = await connection('branch')
       .select('*');
     
-    const [data] = await connection('todo')
+    const [data] = await connection('client')
       .where({id})
       .select('*');
     
-    return response.render('editTodo', { data, branchs });
+    return response.render('editClient', { data, branchs });
   }
 };

@@ -18,7 +18,7 @@
 
 <main class="container">
   <div class="file-input">
-    <form class="file-input__form" action="/" method="post" enctype="application/x-www-form-urlencoded">
+    <form class="file-input__form" action="/client" method="post" enctype="application/x-www-form-urlencoded">
       <input required placeholder="Código" name="code" type="text" />
       <input required placeholder="Razão social" name="corporate_name" type="text" />
       <input required placeholder="Nome" name="name" type="text" />
@@ -36,7 +36,7 @@
       <small class="header__text">Procure pelo cliente específico.</small>
     </header>
   
-    <form action="/search" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="/client/search" method="post" enctype="application/x-www-form-urlencoded">
       <div class="formSearch">
         <input required placeholder="Pesquisar" name="q" type="text" />
         
@@ -64,7 +64,6 @@
     <% } else { %>
       <div class="todos">
       <% data.map(item => { %>
-        
           <div class="todo">
           <div>
             <b>Código: </b>
@@ -82,11 +81,14 @@
             <b>Filial: </b>
             <p><%= item.city %></p>
           </div>
-          
           <div>
-            <a href="/edit/<%= item.id %>" class="btn_edit">EDITAR</a>
+            <b>Última vez modificado: </b>
+            <p><%= new Date(item.updated_at).toLocaleDateString('pt-BR') %></p>
+          </div>
+          <div>
+            <a href="/client/<%= item.id %>" class="btn_edit">EDITAR</a>
               
-            <form action="/delete/<%= item.id %>" method="post" enctype="application/x-www-form-urlencoded">
+            <form action="/client/delete/<%= item.id %>" method="post" enctype="application/x-www-form-urlencoded">
                 <button class="btn_delete">DELETAR</button>
             </form>
           </div>

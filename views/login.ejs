@@ -1,0 +1,32 @@
+<%- include('head') %>
+<%- include('header') %>
+
+<% if(error !=  '') { %>
+  <div id="toast">
+    <div class="toast__container-1">
+      <i class="fas fa-times-circle"></i>
+    </div>
+    <div class="toast__container-2">
+      <p>Error</p>
+      <p><%= error %></p>
+    </div>
+    <button class="toast__button--close">
+      &times;
+    </button>
+  </div>
+<% } %>
+
+<main class="container">
+  <div class="file-input">
+    <form class="file-input__form" action="/session" method="post" enctype="application/x-www-form-urlencoded">
+      <input required placeholder="Nome" name="name" type="text" />
+      <input required placeholder="Senha" name="password" type="password" />
+      
+      <button title="Enviar" type="submit" class="btn">
+        LOGAR
+      </button>
+    </form>
+  </div>
+</main>
+
+<%- include('footer') %>

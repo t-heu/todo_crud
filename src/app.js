@@ -5,6 +5,8 @@ const express = require('express');
 const helmet = require("helmet");
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('passport');
+require('./auth')(passport);
 
 const AppError = require('./utils/appError');
 
@@ -21,6 +23,8 @@ app.use(
     saveUninitialized: false,
   }),
 );
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use(helmet());
 app.use((req, res, next) => {

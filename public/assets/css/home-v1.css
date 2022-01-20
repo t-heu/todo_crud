@@ -38,7 +38,6 @@ ul {
   padding-right: 1em;
   margin-bottom: 1em;
 }
-
 .site-header__wrapper {
   display: flex;
   justify-content: space-between;
@@ -55,7 +54,7 @@ ul {
   width: 50%;
   flex-direction: row-reverse;
 }
-.site-header__start > button {
+.site-header__start > .btn_login {
   background-color: #fff;
   font-family: bold;
   color: #333;
@@ -167,7 +166,7 @@ ul {
   width: 300px;
   border: solid 1px #333;
 }
-.todo > div:nth-child(1), .todo > div:nth-child(2), .todo > div:nth-child(3), .todo > div:nth-child(4)  {
+.todo > div:nth-child(1), .todo > div:nth-child(2), .todo > div:nth-child(3), .todo > div:nth-child(4), .todo > div:nth-child(5)  {
   border-bottom: none;
 }
 .todo > div:last-child {

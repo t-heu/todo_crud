@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('branchs', function(table) {
+  return knex.schema.createTable('branch', function(table) {
     table.string('id').primary();
     table.integer('code_branch').notNullable();
     table.string('city').notNullable();
@@ -9,5 +9,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('branchs')
+  return knex.schema.dropTable('branch')
 };
